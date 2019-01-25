@@ -73,28 +73,28 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
 /* Number Layer
- * ,------------------------------------, ,--------------------------------------------.
- * | ESC | 1  | 2  | 3    | 4    | 5    | | 6     | 7    | 8     | 9     | 0    | BSPC |
- * |-----+----+----+------+------+------| |-------+------+-------+-------+------+------|
- * | *   | [  | ]  | =/+  | -/_  | HOME | | Left  | Down | Up    | Right | PgUp | DEL  |
- * |-----+----+----+------+------+------| |-------+------+-------+-------+------+------|
- * | *   |    |    |      | `/~  | END  | |       |      | LANG2 | LANG1 | PgDn | *    |
- * '---------------+------+------+------| |-------+------+-------+---------------------'
- *                 | *    | FUNC | DEL  | |       |      | *     |
- *                 '--------------------' '----------------------'
+ * ,---------------------------------, ,--------------------------------------------.
+ * | ESC | 1  | 2  | 3  | 4    | 5   | | 6     | 7    | 8     | 9     | 0    | BSPC |
+ * |-----+----+----+----+------+-----| |-------+------+-------+-------+------+------|
+ * | *   | [  | ]  | =  | -    | `   | | Left  | Down | Up    | Right |      | DEL  |
+ * |-----+----+----+----+------+-----| |-------+------+-------+-------+------+------|
+ * | *   | {  | }  | +  | _    | ~   | |       |      | LANG2 | LANG1 |      | *    |
+ * '---------------+----+------+-----| |-------+------+-------+---------------------'
+ *                 | *  | FUNC | DEL | |       |      | *     |
+ *                 '-----------------' '----------------------'
  */
   [_num_] = LAYOUT_kc( \
-    ESC, 1,    2,    3,   4,    5,        6,    7,    8,     9,     0,      BSPC,\
-    _o_, LBRC, RBRC, EQL, MINS, HOME,     LEFT, DOWN, UP,    RIGHT, PGUP,   DEL,\
-    _o_, ___,  ___,  ___, GRV,  END,      ___,  ___,  LANG2, LANG1, PGDOWN, _o_,\
-                     _o_, FUNC, DEL,      ___,  ___,  _o_ \
+    ESC, 1,    2,    3,    4,    5,        6,    7,    8,     9,     0,   BSPC,\
+    _o_, LBRC, RBRC, EQL,  MINS, GRV,      LEFT, DOWN, UP,    RIGHT, ___, DEL,\
+    _o_, LCBR, RCBR, PLUS, UNDS, TILD,     ___,  ___,  LANG2, LANG1, ___, _o_,\
+                     _o_,  FUNC, DEL,      ___,  ___,  _o_ \
   ),
 
 /* Function Layer
  * ,----------------------------------------, ,------------------------------------------.
- * | ESC  | F1   | F2  | F3   | F4   | F5   | | F6  | F7     | F8      | F9  | F10 |     |
+ * | ESC  | F1   | F2  | F3   | F4   | F5   | | F6  | F7     | F8      | F9  | F10 | F11 |
  * |------+------+-----+------+------+------| |-----+--------+---------+-----+-----+-----|
- * | *    |      |     |      |      |      | | F11 | F12    |         |     |     |     |
+ * | *    |      |     |      |      |      | | F11 | F12    |         |     |     | F12 |
  * |------+------+-----+------+------+------| |-----+--------+---------+-----+-----+-----|
  * | *    | DISP |     |      |      |      | |     | Qwerty | Eucalyn |     |     | *   |
  * '-------------------+------+------+------| |-----+--------+---------+-----------------'
@@ -102,10 +102,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                     '--------------------' '------------------------'
  */
   [_func_] = LAYOUT_kc( \
-    ESC, F1,   F2,  F3,  F4,  F5,     F6,  F7,     F8,      F9,  F10, ___,\
-    _o_, ___,  ___, ___, ___, ___,    F11, F12,    ___,     ___, ___, ___,\
-    _o_, DISP, ___, ___, ___, ___,    ___, QWERTY, EUCALYN, ___, ___, _o_,\
-                    _o_, ___, ___,    ___, ___,    _o_ \
+    ESC, F1,   F2,  F3,  F4,  F5,     F6,   F7,     F8,      F9,  F10, F11,\
+    _o_, ___,  ___, ___, ___, ___,    HOME, PGDOWN, PGUP,    END, ___, F12,\
+    _o_, DISP, ___, ___, ___, ___,    ___,  QWERTY, EUCALYN, ___, ___, _o_,\
+                    _o_, ___, ___,    ___,  ___,    _o_ \
   )
 
 };
@@ -116,6 +116,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // custom oled information function
 
 bool displayStatus = false;
+
+
 
 int current_layer;
 void update_current_layer(void) {
@@ -147,6 +149,28 @@ const char *get_layer(void) {
             break;
     }
     return current_layer_str;
+}
+
+void write_layer(struct CharacterMatrix *matrix) {
+    char q1[] = {0x21, 0x22, 0x23, 0x24, 0x25, 0x26, 0x27, 0x28, 0x29, 0x2a, 0x2b, 0x2c, 0x2d, 0};
+    char q2[] = {0x41, 0x42, 0x43, 0x44, 0x45, 0x46, 0x47, 0x48, 0x49, 0x4a, 0x4b, 0x4c, 0x4d, 0};
+    char q3[] = {0x61, 0x62, 0x63, 0x64, 0x65, 0x66, 0x67, 0x68, 0x69, 0x6a, 0x6b, 0x6c, 0x6d, 0};
+    char e1[] = {0x81, 0x82, 0x83, 0x84, 0x85, 0x86, 0x87, 0x88, 0x89, 0x8a, 0x8b, 0x8c, 0x8d, 0};
+    char e2[] = {0xa1, 0xa2, 0xa3, 0xa4, 0xa5, 0xa6, 0xa7, 0xa8, 0xa9, 0xaa, 0xab, 0xac, 0xad, 0};
+    char e3[] = {0xc1, 0xc2, 0xc3, 0xc4, 0xc5, 0xc6, 0xc7, 0xc8, 0xc9, 0xca, 0xcb, 0xcc, 0xcd, 0};
+
+    switch (current_layer) {
+        case _qwerty_:
+            matrix_write_ln(matrix, q1);
+            matrix_write_ln(matrix, q2);
+            matrix_write_ln(matrix, q3);
+            break;
+        case _eucalyn_:
+            matrix_write_ln(matrix, e1);
+            matrix_write_ln(matrix, e2);
+            matrix_write_ln(matrix, e3);
+            break;
+    }
 }
 
 long counter = 0;
@@ -201,11 +225,13 @@ void matrix_render_user(struct CharacterMatrix *matrix) {
     //matrix_write_ln(matrix, read_layer_state());
     //matrix_write_ln(matrix, read_keylog());
 
-    matrix_write_ln(matrix, get_layer());
-    if (displayStatus) {
-        matrix_write_ln(matrix, get_time());
-        matrix_write_ln(matrix, get_count());
-    }
+    //matrix_write_ln(matrix, get_layer());
+    //if (displayStatus) {
+    //    matrix_write_ln(matrix, get_time());
+    //    matrix_write_ln(matrix, get_count());
+    //}
+
+    write_layer(matrix);
 
   } else {
     matrix_write(matrix, read_logo());
