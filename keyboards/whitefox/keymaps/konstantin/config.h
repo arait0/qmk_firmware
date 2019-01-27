@@ -1,9 +1,9 @@
 #pragma once
 
-#define FORCE_NKRO
+#define IS_COMMAND() (get_mods() == (MOD_BIT(KC_LSFT) | MOD_BIT(KC_RCTL)))
 
-#undef  IS_COMMAND
-#define IS_COMMAND() (keyboard_report->mods == (MOD_BIT(KC_LSFT) | MOD_BIT(KC_RCTL)))
+#define LAYER_FN
+#define LAYER_NUMPAD
 
 #define MAGIC_KEY_LAYER0_ALT1 BSLS
 #define MAGIC_KEY_BOOTLOADER  ESC
@@ -21,3 +21,7 @@
 #define PERMISSIVE_HOLD
 #define TAPPING_TERM    200
 #define TAPPING_TOGGLE  2
+
+#define UNICODE_CYCLE_PERSIST   false
+#define UNICODE_SELECTED_MODES  UC_WINC, UC_LNX
+#define UNICODE_WINC_KEY        KC_RGUI
