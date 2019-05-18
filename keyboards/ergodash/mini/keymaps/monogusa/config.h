@@ -1,4 +1,6 @@
 /*
+This is the c configuration file for the keymap
+
 Copyright 2012 Jun Wako <wakojun@gmail.com>
 Copyright 2015 Jack Humbert
 
@@ -18,17 +20,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-/* USB Device descriptor parameter */
-#define VENDOR_ID       0xFEED
-#define PRODUCT_ID      0x3060
-#define DEVICE_VER      0x0001
-#define MANUFACTURER    RGBKB
-#define PRODUCT         Sol
-#define DESCRIPTION     "An RGB, split, ortho-esque keyboard"
+/* Use I2C or Serial, not both */
 
-#ifdef LED_MIRRORED
-  #define RGBLED_NUM 35
-#else
-  #define RGBLED_NUM 70
-#endif
-#define DRIVER_LED_TOTAL  RGBLED_NUM
+#define USE_SERIAL
+// #define USE_I2C
+
+/* Select hand configuration */
+
+#define MASTER_LEFT
+// #define MASTER_RIGHT
+// #define EE_HANDS
+
+#undef RGBLED_NUM
+#define RGBLIGHT_ANIMATIONS
+#define RGBLED_NUM 20
+#define RGBLIGHT_HUE_STEP 10
+#define RGBLIGHT_SAT_STEP 17
+#define RGBLIGHT_VAL_STEP 17
