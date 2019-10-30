@@ -1,5 +1,4 @@
 #include QMK_KEYBOARD_H
-extern bool g_suspend_state;
 #define _LAYER0 0
 #define _LAYER1 1
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -16,14 +15,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		    KC_LSFT,       KC_TRNS,  KC_TRNS, KC_TRNS,KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,  KC_TRNS,          KC_VOLU,  KC_MUTE,\
 		    KC_TRNS,       KC_TRNS,  KC_TRNS,                  KC_TRNS,                   KC_TRNS, KC_TRNS, KC_TRNS,  KC_MPRV,          KC_VOLD,  KC_MNXT),
 };
-
-void rgb_matrix_indicators_user(void)
-{
-	    if (IS_LED_ON(host_keyboard_leds(), USB_LED_CAPS_LOCK))
-	    {
-	      rgb_matrix_set_color(8, 0xFF, 0xFF, 0xFF);
-	    }
-}
 
 void matrix_init_user(void)
 {
