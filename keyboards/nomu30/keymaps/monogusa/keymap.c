@@ -1,10 +1,5 @@
 #include QMK_KEYBOARD_H
 
-#define _BASE 0
-#define _NUMS 1
-#define _SYMS 2
-#define _FUNC 3
-
 #define _QWERTY 0
 #define _L1 1
 #define _L2 2
